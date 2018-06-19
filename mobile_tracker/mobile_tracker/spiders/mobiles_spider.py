@@ -18,7 +18,6 @@ class MobileSpider(scrapy.Spider):
         def extract_with_css(query):
             return response.css(query).extract_first().strip()
 
-        # def get_item_properties():
         arr_attribute = response.css('div.item-properties dt::text').extract()
         arr_value = response.css('div.item-properties dd::text').extract()
         print arr_attribute
@@ -43,6 +42,7 @@ class MobileSpider(scrapy.Spider):
             'model': check_attribute("Model:"),
             'edition': check_attribute("Edition:"),
             'authenticity': check_attribute("Authenticity:"),
+	        'price': extract_with_css('div.ui-price-tag span.amount::text'),
             'features': check_attribute("Features:"),
             'description': response.css('div.item-description p::text').extract(),
         }
